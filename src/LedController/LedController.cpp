@@ -5,7 +5,7 @@
 // Authors:
 // Peter Polidoro polidorop@janelia.hhmi.org
 // ----------------------------------------------------------------------------
-#include "LedController.h"
+#include "../LedController.h"
 
 
 using namespace led_controller;

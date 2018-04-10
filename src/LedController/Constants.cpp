@@ -17,18 +17,18 @@ CONSTANT_STRING(device_name,"led_controller");
 CONSTANT_STRING(firmware_name,"LedController");
 // Use semantic versioning http://semver.org/
 const modular_server::FirmwareInfo firmware_info =
-  {
-    .name_ptr=&firmware_name,
-    .version_major=0,
-    .version_minor=1,
-    .version_patch=1,
-  };
+{
+  .name_ptr=&firmware_name,
+  .version_major=0,
+  .version_minor=1,
+  .version_patch=1,
+};
 
 CONSTANT_STRING(hardware_name,"led_controller");
 
 const int bad_index = -1;
 
-// Interrupts
+// Pins
 
 // Units
 CONSTANT_STRING(ms_units,"ms");
@@ -47,10 +47,10 @@ CONSTANT_STRING(polarity_parameter_name,"polarity");
 CONSTANT_STRING(polarity_positive,"+");
 CONSTANT_STRING(polarity_negative,"-");
 modular_server::SubsetMemberType polarity_ptr_subset[POLARITY_SUBSET_LENGTH] =
-  {
-    {.cs_ptr=&polarity_positive},
-    {.cs_ptr=&polarity_negative},
-  };
+{
+  {.cs_ptr=&polarity_positive},
+  {.cs_ptr=&polarity_negative},
+};
 
 CONSTANT_STRING(delay_parameter_name,"delay");
 const long delay_min = 0;

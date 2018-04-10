@@ -42,7 +42,7 @@ struct PulseInfo
   EventIdPair event_id_pair;
 };
 
-// Interrupts
+// Pins
 
 // Units
 extern ConstantString ms_units;

@@ -17,7 +17,7 @@ namespace led_controller
 namespace constants
 {
 //MAX values must be >= 1, >= created/copied count, < RAM limit
-enum{INTERRUPT_COUNT_MAX=1};
+enum{PIN_COUNT_MAX=1};
 
 enum {CHANNEL_COUNT=2};
 
@@ -28,7 +28,7 @@ extern const size_t sense_pins[CHANNEL_COUNT];
 extern const size_t user_enable_pins[CHANNEL_COUNT];
 extern const uint8_t user_enabled_polarity[CHANNEL_COUNT];
 
-// Interrupts
+// Pins
 
 // Units
 

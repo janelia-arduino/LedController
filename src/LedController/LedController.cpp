@@ -37,21 +37,21 @@ void LedController::setup()
 
   // Add Hardware
   modular_server_.addHardware(constants::hardware_info,
-                              interrupts_);
+                              pins_);
 
-  // Interrupts
+  // Pins
 #if defined(__AVR_ATmega2560__)
-  modular_server::Interrupt & bnc_b_interrupt = modular_server_.createInterrupt(constants::bnc_b_interrupt_name,
-                                                                                constants::bnc_b_pin);
+  modular_server::Pin & bnc_b_pin = modular_server_.createPin(constants::bnc_b_pin_name,
+                                                              constants::bnc_b_pin);
 
-  modular_server::Interrupt & switch_0_interrupt = modular_server_.createInterrupt(constants::switch_0_interrupt_name,
-                                                                                   constants::switch_0_pin);
+  modular_server::Pin & switch_0_pin = modular_server_.createPin(constants::switch_0_pin_name,
+                                                                 constants::switch_0_pin);
 
-  modular_server::Interrupt & switch_1_interrupt = modular_server_.createInterrupt(constants::switch_1_interrupt_name,
-                                                                                   constants::switch_1_pin);
+  modular_server::Pin & switch_1_pin = modular_server_.createPin(constants::switch_1_pin_name,
+                                                                 constants::switch_1_pin);
 
-  modular_server::Interrupt & switch_2_interrupt = modular_server_.createInterrupt(constants::switch_2_interrupt_name,
-                                                                                   constants::switch_2_pin);
+  modular_server::Pin & switch_2_pin = modular_server_.createPin(constants::switch_2_pin_name,
+                                                                 constants::switch_2_pin);
 
 #endif
 
@@ -305,11 +305,11 @@ uint32_t LedController::channelsOn()
 }
 
 int LedController::addPwm(const uint32_t channels,
-                              const ConstantString & polarity,
-                              const long delay,
-                              const long period,
-                              const long on_duration,
-                              const long count)
+                          const ConstantString & polarity,
+                          const long delay,
+                          const long period,
+                          const long on_duration,
+                          const long count)
 {
   if (indexed_pulses_.full())
   {
@@ -334,10 +334,10 @@ int LedController::addPwm(const uint32_t channels,
 }
 
 int LedController::startPwm(const uint32_t channels,
-                                const ConstantString & polarity,
-                                const long delay,
-                                const long period,
-                                const long on_duration)
+                            const ConstantString & polarity,
+                            const long delay,
+                            const long period,
+                            const long on_duration)
 {
   if (indexed_pulses_.full())
   {
@@ -361,11 +361,11 @@ int LedController::startPwm(const uint32_t channels,
 }
 
 int LedController::addTogglePwm(const uint32_t channels,
-                                    const ConstantString & polarity,
-                                    const long delay,
-                                    const long period,
-                                    const long on_duration,
-                                    const long count)
+                                const ConstantString & polarity,
+                                const long delay,
+                                const long period,
+                                const long on_duration,
+                                const long count)
 {
   if (indexed_pulses_.full())
   {
@@ -390,10 +390,10 @@ int LedController::addTogglePwm(const uint32_t channels,
 }
 
 int LedController::startTogglePwm(const uint32_t channels,
-                                      const ConstantString & polarity,
-                                      const long delay,
-                                      const long period,
-                                      const long on_duration)
+                                  const ConstantString & polarity,
+                                  const long delay,
+                                  const long period,
+                                  const long on_duration)
 {
   if (indexed_pulses_.full())
   {

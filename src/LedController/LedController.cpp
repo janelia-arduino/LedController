@@ -40,20 +40,6 @@ void LedController::setup()
                               pins_);
 
   // Pins
-#if defined(__AVR_ATmega2560__)
-  modular_server::Pin & bnc_b_pin = modular_server_.createPin(constants::bnc_b_pin_name,
-                                                              constants::bnc_b_pin);
-
-  modular_server::Pin & switch_0_pin = modular_server_.createPin(constants::switch_0_pin_name,
-                                                                 constants::switch_0_pin);
-
-  modular_server::Pin & switch_1_pin = modular_server_.createPin(constants::switch_1_pin_name,
-                                                                 constants::switch_1_pin);
-
-  modular_server::Pin & switch_2_pin = modular_server_.createPin(constants::switch_2_pin_name,
-                                                                 constants::switch_2_pin);
-
-#endif
 
   // Add Firmware
   modular_server_.addFirmware(constants::firmware_info,

@@ -53,7 +53,7 @@ namespace led_controller
 namespace constants
 {
 //MAX values must be >= 1, >= created/copied count, < RAM limit
-enum{PIN_COUNT_MAX=4};
+enum{PIN_COUNT_MAX=1};
 
 enum {CHANNEL_COUNT=4};
 
@@ -63,17 +63,6 @@ extern const size_t dir_b_pins[CHANNEL_COUNT];
 extern const size_t sense_pins[CHANNEL_COUNT];
 
 // Pins
-extern ConstantString bnc_b_pin_name;
-extern const size_t bnc_b_pin;
-
-extern ConstantString switch_0_pin_name;
-extern const size_t switch_0_pin;
-
-extern ConstantString switch_1_pin_name;
-extern const size_t switch_1_pin;
-
-extern ConstantString switch_2_pin_name;
-extern const size_t switch_2_pin;
 
 // Units
 

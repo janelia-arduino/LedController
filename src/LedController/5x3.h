@@ -3,7 +3,7 @@
 //
 //
 // Authors:
-// Peter Polidoro polidorop@janelia.hhmi.org
+// Peter Polidoro peterpolidoro@gmail.com
 // ----------------------------------------------------------------------------
 #ifndef LED_CONTROLLER_5X3_CONSTANTS_H
 #define LED_CONTROLLER_5X3_CONSTANTS_H

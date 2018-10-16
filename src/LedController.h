@@ -33,44 +33,46 @@ public:
   LedController();
   virtual void setup();
   virtual void update();
-  void setChannelOn(const size_t channel, const ConstantString & polarity);
-  void setChannelOff(const size_t channel);
-  void setChannelsOn(const uint32_t channels, const ConstantString & polarity);
-  void setChannelsOff(const uint32_t channels);
+  void setChannelOn(size_t channel,
+    const ConstantString & polarity);
+  void setChannelOff(size_t channel);
+  void setChannelsOn(uint32_t channels,
+    const ConstantString & polarity);
+  void setChannelsOff(uint32_t channels);
   void setAllChannelsOn(const ConstantString & polarity);
   void setAllChannelsOff();
-  bool channelOn(const size_t channel);
+  bool channelOn(size_t channel);
   uint32_t channelsOn();
 
-  int addPwm(const uint32_t channels,
+  int addPwm(uint32_t channels,
     const ConstantString & polarity,
-    const long delay,
-    const long period,
-    const long on_duration,
-    const long count);
-  int startPwm(const uint32_t channels,
+    long delay,
+    long period,
+    long on_duration,
+    long count);
+  int startPwm(uint32_t channels,
     const ConstantString & polarity,
-    const long delay,
-    const long period,
-    const long on_duration);
-  int addTogglePwm(const uint32_t channels,
+    long delay,
+    long period,
+    long on_duration);
+  int addTogglePwm(uint32_t channels,
     const ConstantString & polarity,
-    const long delay,
-    const long period,
-    const long on_duration,
-    const long count);
-  int startTogglePwm(const uint32_t channels,
+    long delay,
+    long period,
+    long on_duration,
+    long count);
+  int startTogglePwm(uint32_t channels,
     const ConstantString & polarity,
-    const long delay,
-    const long period,
-    const long on_duration);
-  void stopPwm(const int pwm_index);
+    long delay,
+    long period,
+    long on_duration);
+  void stopPwm(int pwm_index);
   void stopAllPwm();
   uint32_t arrayToChannels(ArduinoJson::JsonArray & channels_array);
   const ConstantString & stringToPolarity(const char * string);
 
-  bool boardSwitchEnabled(const size_t channel);
-  bool boardSwitchAndPropertyEnabled(const size_t channel);
+  bool boardSwitchEnabled(size_t channel);
+  bool boardSwitchAndPropertyEnabled(size_t channel);
 
   // Handlers
   virtual void startPwmHandler(int index);

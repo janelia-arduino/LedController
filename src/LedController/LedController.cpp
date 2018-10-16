@@ -51,7 +51,7 @@ void LedController::setup()
   modular_server::Property & polarity_reversed_property = modular_server_.createProperty(constants::polarity_reversed_property_name,constants::polarity_reversed_default);
 
   modular_server::Property & channels_enabled_property = modular_server_.createProperty(constants::channels_enabled_property_name,constants::channels_enabled_default);
-  channels_enabled_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<const size_t> *)0,*this,&LedController::setChannelOff));
+  channels_enabled_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<size_t> *)0,*this,&LedController::setChannelOff));
 
   // Parameters
   modular_server::Parameter & channel_parameter = modular_server_.createParameter(constants::channel_parameter_name);
@@ -197,7 +197,8 @@ void LedController::update()
   }
 }
 
-void LedController::setChannelOn(const size_t channel, const ConstantString & polarity)
+void LedController::setChannelOn(size_t channel,
+  const ConstantString & polarity)
 {
   if (!boardSwitchAndPropertyEnabled(channel))
   {
@@ -225,13 +226,14 @@ void LedController::setChannelOn(const size_t channel, const ConstantString & po
   channels_on_[channel] = true;
 }
 
-void LedController::setChannelOff(const size_t channel)
+void LedController::setChannelOff(size_t channel)
 {
   digitalWrite(constants::enable_pins[channel],LOW);
   channels_on_[channel] = false;
 }
 
-void LedController::setChannelsOn(const uint32_t channels, const ConstantString & polarity)
+void LedController::setChannelsOn(uint32_t channels,
+  const ConstantString & polarity)
 {
   uint32_t bit = 1;
   for (int channel=0; channel<constants::CHANNEL_COUNT; ++channel)
@@ -243,7 +245,7 @@ void LedController::setChannelsOn(const uint32_t channels, const ConstantString 
   }
 }
 
-void LedController::setChannelsOff(const uint32_t channels)
+void LedController::setChannelsOff(uint32_t channels)
 {
   uint32_t bit = 1;
   for (int channel=0; channel<constants::CHANNEL_COUNT; ++channel)
@@ -271,7 +273,7 @@ void LedController::setAllChannelsOff()
   }
 }
 
-bool LedController::channelOn(const size_t channel)
+bool LedController::channelOn(size_t channel)
 {
   return channels_on_[channel];
 }
@@ -290,12 +292,12 @@ uint32_t LedController::channelsOn()
   return channels_on;
 }
 
-int LedController::addPwm(const uint32_t channels,
+int LedController::addPwm(uint32_t channels,
   const ConstantString & polarity,
-  const long delay,
-  const long period,
-  const long on_duration,
-  const long count)
+  long delay,
+  long period,
+  long on_duration,
+  long count)
 {
   if (indexed_pulses_.full())
   {
@@ -319,11 +321,11 @@ int LedController::addPwm(const uint32_t channels,
   return index;
 }
 
-int LedController::startPwm(const uint32_t channels,
+int LedController::startPwm(uint32_t channels,
   const ConstantString & polarity,
-  const long delay,
-  const long period,
-  const long on_duration)
+  long delay,
+  long period,
+  long on_duration)
 {
   if (indexed_pulses_.full())
   {
@@ -346,12 +348,12 @@ int LedController::startPwm(const uint32_t channels,
   return index;
 }
 
-int LedController::addTogglePwm(const uint32_t channels,
+int LedController::addTogglePwm(uint32_t channels,
   const ConstantString & polarity,
-  const long delay,
-  const long period,
-  const long on_duration,
-  const long count)
+  long delay,
+  long period,
+  long on_duration,
+  long count)
 {
   if (indexed_pulses_.full())
   {
@@ -375,11 +377,11 @@ int LedController::addTogglePwm(const uint32_t channels,
   return index;
 }
 
-int LedController::startTogglePwm(const uint32_t channels,
+int LedController::startTogglePwm(uint32_t channels,
   const ConstantString & polarity,
-  const long delay,
-  const long period,
-  const long on_duration)
+  long delay,
+  long period,
+  long on_duration)
 {
   if (indexed_pulses_.full())
   {
@@ -402,7 +404,7 @@ int LedController::startTogglePwm(const uint32_t channels,
   return index;
 }
 
-void LedController::stopPwm(const int pwm_index)
+void LedController::stopPwm(int pwm_index)
 {
   if (pwm_index < 0)
   {
@@ -449,12 +451,12 @@ const ConstantString & LedController::stringToPolarity(const char * string)
   }
 }
 
-bool LedController::boardSwitchEnabled(const size_t channel)
+bool LedController::boardSwitchEnabled(size_t channel)
 {
   return board_switch_enabled_[channel];
 }
 
-bool LedController::boardSwitchAndPropertyEnabled(const size_t channel)
+bool LedController::boardSwitchAndPropertyEnabled(size_t channel)
 {
   bool channel_enabled;
   modular_server_.property(constants::channels_enabled_property_name).getElementValue(channel,

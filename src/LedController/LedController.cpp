@@ -37,16 +37,16 @@ void LedController::setup()
 
   // Add Hardware
   modular_server_.addHardware(constants::hardware_info,
-                              pins_);
+    pins_);
 
   // Pins
 
   // Add Firmware
   modular_server_.addFirmware(constants::firmware_info,
-                              properties_,
-                              parameters_,
-                              functions_,
-                              callbacks_);
+    properties_,
+    parameters_,
+    functions_,
+    callbacks_);
   // Properties
   modular_server::Property & polarity_reversed_property = modular_server_.createProperty(constants::polarity_reversed_property_name,constants::polarity_reversed_default);
 
@@ -188,7 +188,7 @@ void LedController::update()
   for (int channel=0; channel<constants::CHANNEL_COUNT; ++channel)
   {
     enabled = (digitalRead(constants::user_enable_pins[channel]) ==
-               constants::user_enabled_polarity[channel]);
+      constants::user_enabled_polarity[channel]);
     board_switch_enabled_[channel] = enabled;
     if (!enabled && channelOn(channel))
     {
@@ -205,7 +205,7 @@ void LedController::setChannelOn(const size_t channel, const ConstantString & po
   }
   bool channel_polarity_reversed;
   modular_server_.property(constants::polarity_reversed_property_name).getElementValue(channel,
-                                                                                       channel_polarity_reversed);
+    channel_polarity_reversed);
   const ConstantString * polarity_corrected_ptr = &polarity;
   if (channel_polarity_reversed)
   {
@@ -291,11 +291,11 @@ uint32_t LedController::channelsOn()
 }
 
 int LedController::addPwm(const uint32_t channels,
-                          const ConstantString & polarity,
-                          const long delay,
-                          const long period,
-                          const long on_duration,
-                          const long count)
+  const ConstantString & polarity,
+  const long delay,
+  const long period,
+  const long on_duration,
+  const long count)
 {
   if (indexed_pulses_.full())
   {
@@ -306,12 +306,12 @@ int LedController::addPwm(const uint32_t channels,
   pulse_info.polarity_ptr = &polarity;
   int index = indexed_pulses_.add(pulse_info);
   EventIdPair event_id_pair = event_controller_.addPwmUsingDelay(makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnHandler),
-                                                                 makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOffHandler),
-                                                                 delay,
-                                                                 period,
-                                                                 on_duration,
-                                                                 count,
-                                                                 index);
+    makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOffHandler),
+    delay,
+    period,
+    on_duration,
+    count,
+    index);
   event_controller_.addStartFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::startPwmHandler));
   event_controller_.addStopFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::stopPwmHandler));
   indexed_pulses_[index].event_id_pair = event_id_pair;
@@ -320,10 +320,10 @@ int LedController::addPwm(const uint32_t channels,
 }
 
 int LedController::startPwm(const uint32_t channels,
-                            const ConstantString & polarity,
-                            const long delay,
-                            const long period,
-                            const long on_duration)
+  const ConstantString & polarity,
+  const long delay,
+  const long period,
+  const long on_duration)
 {
   if (indexed_pulses_.full())
   {
@@ -334,11 +334,11 @@ int LedController::startPwm(const uint32_t channels,
   pulse_info.polarity_ptr = &polarity;
   int index = indexed_pulses_.add(pulse_info);
   EventIdPair event_id_pair = event_controller_.addInfinitePwmUsingDelay(makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnHandler),
-                                                                         makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOffHandler),
-                                                                         delay,
-                                                                         period,
-                                                                         on_duration,
-                                                                         index);
+    makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOffHandler),
+    delay,
+    period,
+    on_duration,
+    index);
   event_controller_.addStartFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::startPwmHandler));
   event_controller_.addStopFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::stopPwmHandler));
   indexed_pulses_[index].event_id_pair = event_id_pair;
@@ -347,11 +347,11 @@ int LedController::startPwm(const uint32_t channels,
 }
 
 int LedController::addTogglePwm(const uint32_t channels,
-                                const ConstantString & polarity,
-                                const long delay,
-                                const long period,
-                                const long on_duration,
-                                const long count)
+  const ConstantString & polarity,
+  const long delay,
+  const long period,
+  const long on_duration,
+  const long count)
 {
   if (indexed_pulses_.full())
   {
@@ -362,12 +362,12 @@ int LedController::addTogglePwm(const uint32_t channels,
   pulse_info.polarity_ptr = &polarity;
   int index = indexed_pulses_.add(pulse_info);
   EventIdPair event_id_pair = event_controller_.addPwmUsingDelay(makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnHandler),
-                                                                 makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnReversedHandler),
-                                                                 delay,
-                                                                 period,
-                                                                 on_duration,
-                                                                 count,
-                                                                 index);
+    makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnReversedHandler),
+    delay,
+    period,
+    on_duration,
+    count,
+    index);
   event_controller_.addStartFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::startPwmHandler));
   event_controller_.addStopFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::stopPwmHandler));
   indexed_pulses_[index].event_id_pair = event_id_pair;
@@ -376,10 +376,10 @@ int LedController::addTogglePwm(const uint32_t channels,
 }
 
 int LedController::startTogglePwm(const uint32_t channels,
-                                  const ConstantString & polarity,
-                                  const long delay,
-                                  const long period,
-                                  const long on_duration)
+  const ConstantString & polarity,
+  const long delay,
+  const long period,
+  const long on_duration)
 {
   if (indexed_pulses_.full())
   {
@@ -390,11 +390,11 @@ int LedController::startTogglePwm(const uint32_t channels,
   pulse_info.polarity_ptr = &polarity;
   int index = indexed_pulses_.add(pulse_info);
   EventIdPair event_id_pair = event_controller_.addInfinitePwmUsingDelay(makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnHandler),
-                                                                         makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnReversedHandler),
-                                                                         delay,
-                                                                         period,
-                                                                         on_duration,
-                                                                         index);
+    makeFunctor((Functor1<int> *)0,*this,&LedController::setChannelsOnReversedHandler),
+    delay,
+    period,
+    on_duration,
+    index);
   event_controller_.addStartFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::startPwmHandler));
   event_controller_.addStopFunctor(event_id_pair,makeFunctor((Functor1<int> *)0,*this,&LedController::stopPwmHandler));
   indexed_pulses_[index].event_id_pair = event_id_pair;
@@ -458,7 +458,7 @@ bool LedController::boardSwitchAndPropertyEnabled(const size_t channel)
 {
   bool channel_enabled;
   modular_server_.property(constants::channels_enabled_property_name).getElementValue(channel,
-                                                                                      channel_enabled);
+    channel_enabled);
   return (channel_enabled && boardSwitchEnabled(channel));
 }
 

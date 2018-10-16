@@ -43,27 +43,27 @@ public:
   uint32_t channelsOn();
 
   int addPwm(const uint32_t channels,
-             const ConstantString & polarity,
-             const long delay,
-             const long period,
-             const long on_duration,
-             const long count);
+    const ConstantString & polarity,
+    const long delay,
+    const long period,
+    const long on_duration,
+    const long count);
   int startPwm(const uint32_t channels,
-               const ConstantString & polarity,
-               const long delay,
-               const long period,
-               const long on_duration);
+    const ConstantString & polarity,
+    const long delay,
+    const long period,
+    const long on_duration);
   int addTogglePwm(const uint32_t channels,
-                   const ConstantString & polarity,
-                   const long delay,
-                   const long period,
-                   const long on_duration,
-                   const long count);
+    const ConstantString & polarity,
+    const long delay,
+    const long period,
+    const long on_duration,
+    const long count);
   int startTogglePwm(const uint32_t channels,
-                     const ConstantString & polarity,
-                     const long delay,
-                     const long period,
-                     const long on_duration);
+    const ConstantString & polarity,
+    const long delay,
+    const long period,
+    const long on_duration);
   void stopPwm(const int pwm_index);
   void stopAllPwm();
   uint32_t arrayToChannels(ArduinoJson::JsonArray & channels_array);
@@ -87,7 +87,7 @@ private:
   EventController<led_controller::constants::EVENT_COUNT_MAX> event_controller_;
 
   IndexedContainer<led_controller::constants::PulseInfo,
-                   led_controller::constants::INDEXED_PULSES_COUNT_MAX> indexed_pulses_;
+    led_controller::constants::INDEXED_PULSES_COUNT_MAX> indexed_pulses_;
 
   bool board_switch_enabled_[led_controller::constants::CHANNEL_COUNT];
   bool channels_on_[led_controller::constants::CHANNEL_COUNT];

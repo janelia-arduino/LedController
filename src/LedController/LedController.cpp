@@ -48,7 +48,7 @@ void LedController::setup()
     functions_,
     callbacks_);
   // Properties
-  modular_server::Property & polarity_reversed_property = modular_server_.createProperty(constants::polarity_reversed_property_name,constants::polarity_reversed_default);
+  modular_server_.createProperty(constants::polarity_reversed_property_name,constants::polarity_reversed_default);
 
   modular_server::Property & channels_enabled_property = modular_server_.createProperty(constants::channels_enabled_property_name,constants::channels_enabled_default);
   channels_enabled_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<size_t> *)0,*this,&LedController::setChannelOff));
@@ -425,15 +425,12 @@ void LedController::stopAllPwm()
   }
 }
 
-uint32_t LedController::arrayToChannels(ArduinoJson::JsonArray & channels_array)
+uint32_t LedController::arrayToChannels(ArduinoJson::JsonArray channels_array)
 {
   uint32_t channels = 0;
   uint32_t bit = 1;
-  for (ArduinoJson::JsonArray::iterator channels_it=channels_array.begin();
-       channels_it != channels_array.end();
-       ++channels_it)
+  for (long channel : channels_array)
   {
-    long channel = *channels_it;
     channels |= bit << channel;
   }
   return channels;
@@ -471,8 +468,8 @@ bool LedController::boardSwitchAndPropertyEnabled(size_t channel)
 // floating-point number (float, double)
 // bool
 // const char *
-// ArduinoJson::JsonArray *
-// ArduinoJson::JsonObject *
+// ArduinoJson::JsonArray
+// ArduinoJson::JsonObject
 // const ConstantString *
 //
 // For more info read about ArduinoJson parsing https://github.com/janelia-arduino/ArduinoJson
@@ -512,20 +509,20 @@ void LedController::setChannelOffHandler()
 
 void LedController::setChannelsOnHandler()
 {
-  ArduinoJson::JsonArray * channels_array_ptr;
-  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array_ptr);
+  ArduinoJson::JsonArray channels_array;
+  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array);
   const char * polarity_string;
   modular_server_.parameter(constants::polarity_parameter_name).getValue(polarity_string);
-  const uint32_t channels = arrayToChannels(*channels_array_ptr);
+  const uint32_t channels = arrayToChannels(channels_array);
   const ConstantString & polarity = stringToPolarity(polarity_string);
   setChannelsOn(channels,polarity);
 }
 
 void LedController::setChannelsOffHandler()
 {
-  ArduinoJson::JsonArray * channels_array_ptr;
-  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array_ptr);
-  const uint32_t channels = arrayToChannels(*channels_array_ptr);
+  ArduinoJson::JsonArray channels_array;
+  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array);
+  const uint32_t channels = arrayToChannels(channels_array);
   setChannelsOff(channels);
 }
 
@@ -566,8 +563,8 @@ void LedController::channelsOnHandler()
 
 void LedController::addPwmHandler()
 {
-  ArduinoJson::JsonArray * channels_array_ptr;
-  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array_ptr);
+  ArduinoJson::JsonArray channels_array;
+  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array);
   const char * polarity_string;
   modular_server_.parameter(constants::polarity_parameter_name).getValue(polarity_string);
   long delay;
@@ -578,7 +575,7 @@ void LedController::addPwmHandler()
   modular_server_.parameter(constants::on_duration_parameter_name).getValue(on_duration);
   long count;
   modular_server_.parameter(constants::count_parameter_name).getValue(count);
-  const uint32_t channels = arrayToChannels(*channels_array_ptr);
+  const uint32_t channels = arrayToChannels(channels_array);
   const ConstantString & polarity = stringToPolarity(polarity_string);
   int index = addPwm(channels,polarity,delay,period,on_duration,count);
   if (index >= 0)
@@ -593,8 +590,8 @@ void LedController::addPwmHandler()
 
 void LedController::startPwmHandler()
 {
-  ArduinoJson::JsonArray * channels_array_ptr;
-  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array_ptr);
+  ArduinoJson::JsonArray channels_array;
+  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array);
   const char * polarity_string;
   modular_server_.parameter(constants::polarity_parameter_name).getValue(polarity_string);
   long delay;
@@ -603,7 +600,7 @@ void LedController::startPwmHandler()
   modular_server_.parameter(constants::period_parameter_name).getValue(period);
   long on_duration;
   modular_server_.parameter(constants::on_duration_parameter_name).getValue(on_duration);
-  const uint32_t channels = arrayToChannels(*channels_array_ptr);
+  const uint32_t channels = arrayToChannels(channels_array);
   const ConstantString & polarity = stringToPolarity(polarity_string);
   int index = startPwm(channels,polarity,delay,period,on_duration);
   if (index >= 0)
@@ -618,8 +615,8 @@ void LedController::startPwmHandler()
 
 void LedController::addTogglePwmHandler()
 {
-  ArduinoJson::JsonArray * channels_array_ptr;
-  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array_ptr);
+  ArduinoJson::JsonArray channels_array;
+  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array);
   const char * polarity_string;
   modular_server_.parameter(constants::polarity_parameter_name).getValue(polarity_string);
   long delay;
@@ -630,7 +627,7 @@ void LedController::addTogglePwmHandler()
   modular_server_.parameter(constants::on_duration_parameter_name).getValue(on_duration);
   long count;
   modular_server_.parameter(constants::count_parameter_name).getValue(count);
-  const uint32_t channels = arrayToChannels(*channels_array_ptr);
+  const uint32_t channels = arrayToChannels(channels_array);
   const ConstantString & polarity = stringToPolarity(polarity_string);
   int index = addTogglePwm(channels,polarity,delay,period,on_duration,count);
   if (index >= 0)
@@ -645,8 +642,8 @@ void LedController::addTogglePwmHandler()
 
 void LedController::startTogglePwmHandler()
 {
-  ArduinoJson::JsonArray * channels_array_ptr;
-  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array_ptr);
+  ArduinoJson::JsonArray channels_array;
+  modular_server_.parameter(constants::channels_parameter_name).getValue(channels_array);
   const char * polarity_string;
   modular_server_.parameter(constants::polarity_parameter_name).getValue(polarity_string);
   long delay;
@@ -655,7 +652,7 @@ void LedController::startTogglePwmHandler()
   modular_server_.parameter(constants::period_parameter_name).getValue(period);
   long on_duration;
   modular_server_.parameter(constants::on_duration_parameter_name).getValue(on_duration);
-  const uint32_t channels = arrayToChannels(*channels_array_ptr);
+  const uint32_t channels = arrayToChannels(channels_array);
   const ConstantString & polarity = stringToPolarity(polarity_string);
   int index = startTogglePwm(channels,polarity,delay,period,on_duration);
   if (index >= 0)

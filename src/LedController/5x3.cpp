@@ -26,6 +26,8 @@ const size_t enable_pins[CHANNEL_COUNT] = {8,9,10,11};
 const size_t dir_a_pins[CHANNEL_COUNT] = {30,32,34,36};
 const size_t dir_b_pins[CHANNEL_COUNT] = {31,33,35,37};
 const size_t sense_pins[CHANNEL_COUNT] = {0,1,2,3};
+const size_t user_enable_pins[CHANNEL_COUNT] = {4,4,4,4};
+const uint8_t user_enabled_polarity[CHANNEL_COUNT] = {LOW,LOW,LOW,LOW};
 
 // Pins
 
